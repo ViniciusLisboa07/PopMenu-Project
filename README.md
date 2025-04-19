@@ -1,4 +1,4 @@
-# Popmenu Interview Project
+# 👩🏻‍🍳 Popmenu Interview Project
 
 This repository contains the implementation of the Popmenu Interview Project, a RESTful API for managing restaurant menus and menu items. The project is built with **Ruby on Rails**, uses **PostgreSQL** as the database, and is containerized with **Docker** using **docker-compose**. Tests are written with **RSpec** and use **FactoryBot** and **Faker** for test data.
 
