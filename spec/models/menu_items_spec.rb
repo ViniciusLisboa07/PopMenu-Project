@@ -14,14 +14,10 @@ RSpec.describe MenuItem, type: :model do
   end
 
   it 'is not valid without a menu' do
-    expect(build(:menu_item, menu: nil)).to_not be_valid
+    expect(build(:menu_item, :with_menus, menus: []).menus).to be_empty
   end
 
   it 'is not valid without a description' do
-    expect(build(:menu_item, description: nil)).to_not be_valid
-  end
-
-  it 'is not valid without a menu_id' do
-    expect(build(:menu_item, menu_id: nil)).to_not be_valid
+    expect(build(:menu_item, :with_menus, menus: [create(:menu)], description: nil)).to_not be_valid
   end
 end

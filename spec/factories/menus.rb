@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :menu do
-    name { Faker::Lorem.word }
-    description { Faker::Lorem.sentence }
+    sequence(:name) { |n| "#{Faker::Restaurant.name} ##{n}" }
+    description { Faker::Restaurant.description }
     active { true }
     restaurant { create(:restaurant) }
   end

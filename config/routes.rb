@@ -15,6 +15,6 @@ Rails.application.routes.draw do
     resources :menus, only: [:index, :show, :create, :update, :destroy] do
       resources :menu_items, only: [:index, :show, :create, :update, :destroy]
     end
-    resources :menu_items, only: [:index, :show, :create, :update, :destroy]
+    resources :menu_items, only: [:index, :show, :update, :destroy]
   end
 end

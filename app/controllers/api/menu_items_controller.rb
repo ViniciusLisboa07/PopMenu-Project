@@ -1,9 +1,13 @@
 class Api::MenuItemsController < ApplicationController
-  before_action :set_menu, only: [:index, :create, :show, :update, :destroy]
+  before_action :set_menu, only: [:index, :create, :show, :update, :destroy], if: :nested_route?
   before_action :set_menu_item, only: [:show, :update, :destroy]
 
   def index
-    @menu_items = @menu.menu_items
+    @menu_items = if @menu
+                    @menu.menu_items
+                  else
+                    MenuItem.all
+                  end
     render json: @menu_items, status: :ok
   end
 
@@ -43,12 +47,20 @@ class Api::MenuItemsController < ApplicationController
   end
 
   def set_menu_item
-    @menu_item = @menu.menu_items.find(params[:id])
+    @menu_item = if @menu
+                   @menu.menu_items.find(params[:id])
+                 else
+                   MenuItem.find(params[:id])
+                 end
   rescue ActiveRecord::RecordNotFound
-    render json: { error: 'MenuItem not found' }, status: :not_found
+    render json: { error: 'Menu item not found' }, status: :not_found
   end
 
   def menu_item_params
     params.require(:menu_item).permit(:name, :description, :price)
+  end
+
+  def nested_route?
+    params[:menu_id].present?
   end
 end
