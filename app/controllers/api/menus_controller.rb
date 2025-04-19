@@ -36,6 +36,8 @@ class Api::MenusController < ApplicationController
 
   def set_menu
     @menu = Menu.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    render json: { error: 'Menu not found' }, status: :not_found
   end
 
   def menu_params

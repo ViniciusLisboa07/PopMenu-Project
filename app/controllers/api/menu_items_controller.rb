@@ -35,6 +35,8 @@ class Api::MenuItemsController < ApplicationController
 
   def set_menu_item
     @menu_item = MenuItem.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    render json: { error: 'Menu item not found' }, status: :not_found
   end
 
   def menu_item_params
