@@ -1,9 +1,14 @@
 class Api::MenusController < ApplicationController
-
+  before_action :set_restaurant, only: [:index, :create], if: :nested_route?
   before_action :set_menu, only: [:show, :update, :destroy]
 
   def index
-    render json: Menu.all, include: [:menu_items, :restaurant], status: :ok
+    @menus = if @restaurant
+               @restaurant.menus
+             else
+               Menu.all
+             end
+    render json: @menus, include: [:menu_items, :restaurant], status: :ok
   end
 
   def show
@@ -11,7 +16,11 @@ class Api::MenusController < ApplicationController
   end
 
   def create
-    @menu = Menu.new(menu_params)
+    @menu = if @restaurant
+              @restaurant.menus.build(menu_params)
+            else
+              Menu.new(menu_params)
+            end
     if @menu.save
       render json: @menu, include: [:menu_items, :restaurant], status: :created
     else
@@ -34,6 +43,12 @@ class Api::MenusController < ApplicationController
 
   private
 
+  def set_restaurant
+    @restaurant = Restaurant.find(params[:restaurant_id])
+  rescue ActiveRecord::RecordNotFound
+    render json: { error: 'Restaurant not found' }, status: :not_found and return
+  end
+
   def set_menu
     @menu = Menu.find(params[:id])
   rescue ActiveRecord::RecordNotFound
@@ -42,5 +57,9 @@ class Api::MenusController < ApplicationController
 
   def menu_params
     params.require(:menu).permit(:name, :description, :active, :restaurant_id)
+  end
+
+  def nested_route?
+    params[:restaurant_id].present?
   end
 end

@@ -3,5 +3,6 @@ FactoryBot.define do
     name { Faker::Lorem.word }
     description { Faker::Lorem.sentence }
     active { true }
+    restaurant { create(:restaurant) }
   end
 end 
