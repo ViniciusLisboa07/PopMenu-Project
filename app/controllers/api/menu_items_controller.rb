@@ -1,8 +1,10 @@
 class Api::MenuItemsController < ApplicationController
+  before_action :set_menu, only: [:index, :create, :show, :update, :destroy]
   before_action :set_menu_item, only: [:show, :update, :destroy]
 
   def index
-    render json: MenuItem.all, status: :ok
+    @menu_items = @menu.menu_items
+    render json: @menu_items, status: :ok
   end
 
   def show
@@ -12,6 +14,7 @@ class Api::MenuItemsController < ApplicationController
   def create
     @menu_item = MenuItem.new(menu_item_params)
     if @menu_item.save
+      MenuMenuItem.create!(menu_id: @menu.id, menu_item_id: @menu_item.id)
       render json: @menu_item, status: :created
     else
       render json: { errors: @menu_item.errors.full_messages }, status: :unprocessable_entity
@@ -33,13 +36,19 @@ class Api::MenuItemsController < ApplicationController
 
   private
 
-  def set_menu_item
-    @menu_item = MenuItem.find(params[:id])
+  def set_menu
+    @menu = Menu.find(params[:menu_id])
   rescue ActiveRecord::RecordNotFound
-    render json: { error: 'Menu item not found' }, status: :not_found
+    render json: { error: 'Menu not found' }, status: :not_found
+  end
+
+  def set_menu_item
+    @menu_item = @menu.menu_items.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    render json: { error: 'MenuItem not found' }, status: :not_found
   end
 
   def menu_item_params
-    params.require(:menu_item).permit(:name, :description, :price, :menu_id)
+    params.require(:menu_item).permit(:name, :description, :price)
   end
 end

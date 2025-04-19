@@ -3,17 +3,17 @@ class Api::MenusController < ApplicationController
   before_action :set_menu, only: [:show, :update, :destroy]
 
   def index
-    render json: Menu.all, include: :menu_items, status: :ok
+    render json: Menu.all, include: [:menu_items, :restaurant], status: :ok
   end
 
   def show
-    render json: @menu, include: :menu_items, status: :ok
+    render json: @menu, include: [:menu_items, :restaurant], status: :ok
   end
 
   def create
     @menu = Menu.new(menu_params)
     if @menu.save
-      render json: @menu, include: :menu_items, status: :created
+      render json: @menu, include: [:menu_items, :restaurant], status: :created
     else
       render json: { errors: @menu.errors.full_messages }, status: :unprocessable_entity
     end
@@ -21,7 +21,7 @@ class Api::MenusController < ApplicationController
 
   def update
     if @menu.update(menu_params)
-      render json: @menu, include: :menu_items, status: :ok
+      render json: @menu, include: [:menu_items, :restaurant], status: :ok
     else
       render json: { errors: @menu.errors.full_messages }, status: :unprocessable_entity
     end
@@ -41,6 +41,6 @@ class Api::MenusController < ApplicationController
   end
 
   def menu_params
-    params.require(:menu).permit(:name, :description, :active)
+    params.require(:menu).permit(:name, :description, :active, :restaurant_id)
   end
 end
