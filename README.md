@@ -37,6 +37,12 @@ Level 1 implements a basic menu system with the following features:
   - Tests validate success cases (e.g., correct HTTP status, JSON structure) and error cases (e.g., not found, invalid parameters).
   - Database cleanup is handled using Rails' transactional fixtures.
 
+## Level 2: Restaurants | Multiple Menus
+The complete description of Level 2 implementation:
+https://github.com/ViniciusLisboa07/PopMenu-Project/pull/1
+
+## Level 3: Json file support
+
 ### Technologies
 - **Ruby**: 3.3.5
 - **Rails**: 7.2.x
