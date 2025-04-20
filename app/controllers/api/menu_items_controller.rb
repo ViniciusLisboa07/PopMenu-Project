@@ -18,8 +18,8 @@ class Api::MenuItemsController < ApplicationController
   def create
     @menu_item = MenuItem.new(menu_item_params)
     if @menu_item.save
-      MenuMenuItem.create!(menu_id: @menu.id, menu_item_id: @menu_item.id)
-      render json: @menu_item, status: :created
+      MenuMenuItem.create!(menu_id: @menu.id, menu_item_id: @menu_item.id) if @menu.present?
+      render json: @menu_item, include: [:menus], status: :created
     else
       render json: { errors: @menu_item.errors.full_messages }, status: :unprocessable_entity
     end
@@ -27,7 +27,7 @@ class Api::MenuItemsController < ApplicationController
 
   def update
     if @menu_item.update(menu_item_params)
-      render json: @menu_item, status: :ok
+      render json: @menu_item, include: [:menus], status: :ok
     else
       render json: { errors: @menu_item.errors.full_messages }, status: :unprocessable_entity
     end
