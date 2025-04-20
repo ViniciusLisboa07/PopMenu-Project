@@ -100,15 +100,15 @@ class ImportService
   
       menu_item = MenuItem.find_by(name: item_data['name'])
       if menu_item
-        @logs << "Menu item #{menu_item.name} already exists"
+        @logs << "Menu item '#{menu_item.name}' already exists"
 
         if menu_item.price != item_data['price']
           menu_item.price = item_data['price']
-          @logs << "Menu item #{menu_item.name} updated with price #{menu_item.price}"
+          @logs << "Menu item '#{menu_item.name}' updated with price #{menu_item.price}"
         end
       else
         menu_item = MenuItem.new(name: item_data['name'], price: item_data['price'])
-        @logs << "Menu item #{menu_item.name} created"
+        @logs << "Menu item '#{menu_item.name}' created with price #{menu_item.price}"
       end
     
     if menu_item.save
