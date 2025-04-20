@@ -33,8 +33,6 @@ class ImportService
     end
   
     def import_restaurant(restaurant_data)
-      return unless restaurant_data['name'].present?
-  
       restaurant = Restaurant.find_or_initialize_by(name: restaurant_data['name'])
       if restaurant.save
         @logs << "Restaurant '#{restaurant.name}' created or found successfully"
@@ -42,7 +40,7 @@ class ImportService
       else
         @logs << "Failed to create restaurant '#{restaurant_data['name']}': #{restaurant.errors.full_messages.join(', ')}"
         @status = :failure
-        nil
+        return nil
       end
     end
   
@@ -111,7 +109,7 @@ class ImportService
         @logs << "Menu item '#{menu_item.name}' created with price #{menu_item.price}"
       end
     
-    if menu_item.save
+      if menu_item.save
         if menu.menu_items.include?(menu_item)
           @logs << "MenuItem '#{menu_item.name}' already associated with menu '#{menu.name}'"
         else
