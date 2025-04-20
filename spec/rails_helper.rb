@@ -14,6 +14,5 @@ RSpec.configure do |config|
 
   config.before(:suite) do
     Rails.application.load_seed if Rails.env.test?
-    DatabaseCleaner.clean_with(:truncation) if defined?(DatabaseCleaner)
   end
 end
