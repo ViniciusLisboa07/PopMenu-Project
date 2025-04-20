@@ -28,7 +28,7 @@ routes:
 	docker-compose exec web rails routes
 
 test:
-	docker-compose exec web rails test
+	docker-compose exec web rspec spec/
 
 seed:
 	docker-compose exec web rails db:seed
