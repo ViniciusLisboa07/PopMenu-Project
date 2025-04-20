@@ -166,7 +166,7 @@ RSpec.describe "Api::Menu itemsController", type: :request do
         end
 
         context 'when parameters are invalid' do
-          let(:invalid_attributes) { { menu_item: { name: 'Pancake', price: 5.99 } } }
+          let(:invalid_attributes) { { menu_item: { name: nil, price: 5.99 } } }
           
           before { post "/api/menus/#{menu.id}/menu_items", params: invalid_attributes }
 

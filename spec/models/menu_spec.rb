@@ -9,8 +9,8 @@ RSpec.describe Menu, type: :model do
     expect(build(:menu, name: nil)).to_not be_valid
   end
 
-  it 'is not valid without a description' do
-    expect(build(:menu, description: nil)).to_not be_valid
+  it 'is valid without a description' do
+    expect(build(:menu, description: nil)).to be_valid
   end
 
   it 'is not valid without an active status' do

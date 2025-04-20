@@ -16,5 +16,7 @@ Rails.application.routes.draw do
       resources :menu_items, only: [:index, :show, :create, :update, :destroy]
     end
     resources :menu_items, only: [:index, :show, :update, :destroy]
+
+    post '/import', to: 'imports#create'
   end
 end

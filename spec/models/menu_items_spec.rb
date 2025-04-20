@@ -19,8 +19,8 @@ RSpec.describe MenuItem, type: :model do
       expect(build(:menu_item, :with_menus, menus: []).menus).to be_empty
     end
 
-    it 'is not valid without a description' do
-      expect(build(:menu_item, :with_menus, menus: [create(:menu)], description: nil)).to_not be_valid
+    it 'is valid without a description' do
+      expect(build(:menu_item, :with_menus, menus: [create(:menu)], description: nil)).to be_valid
     end
 
     it 'validates uniqueness of name' do
