@@ -7,7 +7,6 @@ services:
     environment:
       POSTGRES_PASSWORD: password
       POSTGRES_USER: postgres
-      POSTGRES_DB: app_development
     ports:
       - "5432:5432"
 
@@ -21,7 +20,7 @@ services:
     depends_on:
       - db
     environment:
-      DATABASE_URL: postgres://postgres:password@db:5432/app_development
+      RAILS_ENV: development
     user: "1000:1000"
 
 volumes:

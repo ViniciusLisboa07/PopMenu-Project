@@ -1,7 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe "Api::MenusController", type: :request do
-  let!(:menus) { create_list(:menu, 3) }
+  let(:restaurant) { create(:restaurant) }
+  let!(:menus) { create_list(:menu, 3, restaurant: restaurant) }
   let(:menu_id) { menus.first.id }
 
   describe 'GET /api/menus' do
@@ -10,6 +11,7 @@ RSpec.describe "Api::MenusController", type: :request do
     it 'returns all menus' do
       expect(response).to have_http_status(:ok)
       expect(JSON.parse(response.body).size).to eq(3)
+      expect(JSON.parse(response.body).first['restaurant_id']).to eq(restaurant.id)
     end
   end
 
@@ -34,8 +36,8 @@ RSpec.describe "Api::MenusController", type: :request do
   end
 
   describe 'POST /api/menus' do
-    let(:valid_attributes) { { menu: { name: 'New Menu', description: 'Description of the new menu', active: true } } }
-    let(:invalid_attributes) { { menu: { name: nil, description: 'Description of the new menu', active: true } } }
+    let(:valid_attributes) { { menu: { name: 'New Menu', description: 'Description of the new menu', active: true, restaurant_id: restaurant.id } } }
+    let(:invalid_attributes) { { menu: { name: nil, description: 'Description of the new menu', active: true, restaurant_id: restaurant.id } } }
 
     context 'when the parameters are valid' do
       before { post '/api/menus', params: valid_attributes }
