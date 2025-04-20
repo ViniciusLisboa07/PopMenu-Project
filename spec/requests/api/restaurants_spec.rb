@@ -84,6 +84,10 @@ RSpec.describe "Api::RestaurantsController", type: :request do
         expect(response).to have_http_status(:no_content)
         expect(Restaurant.find_by(id: restaurant.id)).to be_nil
       end
+
+      it 'deletes the menus associated with the restaurant' do
+        expect(Menu.find_by(id: menu.id)).to be_nil
+      end
     end
 
     context 'when the restaurant does not exist' do
