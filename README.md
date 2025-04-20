@@ -42,6 +42,8 @@ The complete description of Level 2 implementation:
 https://github.com/ViniciusLisboa07/PopMenu-Project/pull/1
 
 ## Level 3: Json file support
+The complete description of Level 2 implementation:
+https://github.com/ViniciusLisboa07/PopMenu-Project/pull/2
 
 ### Technologies
 - **Ruby**: 3.3.5
